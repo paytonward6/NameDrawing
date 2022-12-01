@@ -1,6 +1,7 @@
 import turtle
 
 class STurtle(turtle.Turtle):
+    COLORS = ["black", "red", "green", "blue", "cyan", "yellow", "magenta"]
     def hgoto(self, x, y):
         self.penup()
         self.goto(x, y)
@@ -24,25 +25,33 @@ def main():
     t.home()
     t.setheading(270)
 
-    t.hgoto(0, height/2)
+    t.hgoto(-width/2, height/2)
+
+    name = "Name Here"
+    bin_name = []
+    for i in name:
+        bin_name.append(str(format(ord(i), '08b'))[1:])
+    print(bin_name)
+
+    t.setheading(270)
+    offset_x = 50
+    offset_y = 30
+
+    for i in range(len(bin_name)):
+        t.hgoto(-width/2 - 10, height/2 - i*offset_y)
+        t.pencolor("black")
+        t.write(name[i], move=True, align="left")
+
+        for j in range(len(bin_name[i])):
+            if bin_name[i][j] == '1':
+                t.hgoto(-width/2 + j*offset_x, height/2 - i*offset_y)
+                t.pencolor(t.COLORS[j])
+                t.forward(20)
 
     i_x, i_y = t.pos()
     print(i_x, i_y)
-    t.setheading(270)
-    t.forward(110)
 
     turtle.exitonclick()
 
 if __name__ == "__main__":
-    #main()
-    name = "Payton"
-    bin_name = []
-    for i in name:
-        bin_name.append(str(format(ord(i), '08b')))
-    print(bin_name)
-
-    for i in bin_name:
-        for j in range(len(i)):
-            if i[j] == '1':
-                print(i[j], end=" ")
-        print()
+    main()
